@@ -104,6 +104,14 @@ static NSString* RMASN1ReadIA5SString(const uint8_t **pp, long omax)
 static NSURL *_appleRootCertificateURL = nil;
 
 @implementation RMAppReceipt
+@synthesize hash = mHash;
+@synthesize bundleIdentifier = mBundleIdentifier;
+@synthesize bundleIdentifierData = mBundleIdentifierData;
+@synthesize appVersion = mAppVersion;
+@synthesize opaqueValue = mOpaqueValue;
+@synthesize originalAppVersion = mOriginalAppVersion;
+@synthesize expirationDate = mExpirationDate;
+
 
 - (id)initWithASN1Data:(NSData*)asn1Data
 {
@@ -117,17 +125,17 @@ static NSURL *_appleRootCertificateURL = nil;
             switch (type)
             {
                 case RMAppReceiptASN1TypeBundleIdentifier:
-                    _bundleIdentifierData = data;
-                    _bundleIdentifier = RMASN1ReadUTF8String(&s, length);
+                    mBundleIdentifierData = data;
+                    mBundleIdentifier = RMASN1ReadUTF8String(&s, length);
                     break;
                 case RMAppReceiptASN1TypeAppVersion:
-                    _appVersion = RMASN1ReadUTF8String(&s, length);
+                    mAppVersion = RMASN1ReadUTF8String(&s, length);
                     break;
                 case RMAppReceiptASN1TypeOpaqueValue:
-                    _opaqueValue = data;
+                    mOpaqueValue = data;
                     break;
                 case RMAppReceiptASN1TypeHash:
-                    _hash = data;
+                    mHash = data;
                     break;
                 case RMAppReceiptASN1TypeInAppPurchaseReceipt:
                 {
@@ -136,12 +144,12 @@ static NSURL *_appleRootCertificateURL = nil;
                     break;
                 }
                 case RMAppReceiptASN1TypeOriginalAppVersion:
-                    _originalAppVersion = RMASN1ReadUTF8String(&s, length);
+                    mOriginalAppVersion = RMASN1ReadUTF8String(&s, length);
                     break;
                 case RMAppReceiptASN1TypeExpirationDate:
                 {
                     NSString *string = RMASN1ReadIA5SString(&s, length);
-                    _expirationDate = [RMAppReceipt formatRFC3339String:string];
+                    mExpirationDate = [RMAppReceipt formatRFC3339String:string];
                     break;
                 }
             }
