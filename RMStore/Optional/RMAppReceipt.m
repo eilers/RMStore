@@ -113,8 +113,6 @@ static NSURL *_appleRootCertificateURL = nil;
 @synthesize expirationDate = mExpirationDate;
 
 
-@synthesize hash = mHash;
-
 - (id)initWithASN1Data:(NSData*)asn1Data
 {
     if (self = [super init])
